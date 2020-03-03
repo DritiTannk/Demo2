@@ -1,0 +1,49 @@
+Commands for creating SSH KEYS on MAC OS.
+
+Part 1: On Local System.
+
+1. Open Terminalthe terminal.
+
+2.  Create a new ssh key, using the provided email as a label.
+
+$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+> Generating public/private rsa key pair.
+When you're prompted to "Enter a file in which to save the key," press Enter. This accepts the default file location.
+
+> Enter a file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]
+> Enter a file in which to save the key (/home/you/.ssh/id_rsa): [Press enter]
+At the prompt, type a secure passphrase. For more information, see "Working with SSH key passphrases".
+
+> Enter passphrase (empty for no passphrase): [Type a passphrase]> Enter same passphrase again: [Type passphrase again]
+
+3. Start the ssh-agent in the background.
+
+$ eval "$(ssh-agent -s)"
+> Agent pid 59566
+
+If you're using macOS Sierra 10.12.2 or later, you will need to modify your ~/.ssh/config file to automatically load keys into the ssh-agent and store passphrases in your keychain.
+
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_rsa
+Add your SSH private key to the ssh-agent and store your passphrase in the keychain. If you created your key with a different name, or if you are adding an existing key that has a different name, replace id_rsa in the command with the name of your private key file.
+
+4. ADD The Key
+
+$ ssh-add -K ~/.ssh/id_rsa
+
+
+Part 2: On GitHub Account.
+
+1. Copy the id_rsa_pub file content on clip board.
+2. In Your Github Account > settings >select SSH and GPG option.
+3. Click on "ADD New SSH KEY"
+4. In Title Section Give Appropriate title ex: Personal Laptop , Office PC etc For Unique Identification of each Key
+5. Paste The content in "Key" and click on Add. 
+
+
+
+DONE !!! - You have sucessfully added the ssh key.
+
+Use this key for cloning or pushing or Pulling the repositiory contents.
